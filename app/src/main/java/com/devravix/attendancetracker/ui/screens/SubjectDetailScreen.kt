@@ -1,5 +1,7 @@
 package com.devravix.attendancetracker.ui.screens
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -81,20 +83,21 @@ fun SubjectDetailScreen(
                 val pct = if (total > 0) (present.toFloat() / total * 100) else 0f
                 
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                    modifier = Modifier.fillMaxWidth().animateContentSize(),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Overall Attendance", style = MaterialTheme.typography.labelLarge)
+                        Text("Overall Attendance", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f))
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "$present / $total (${String.format(Locale.getDefault(), "%.1f", pct)}%)",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            style = MaterialTheme.typography.displaySmall,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 }
@@ -103,7 +106,8 @@ fun SubjectDetailScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         CalendarView(
@@ -367,57 +371,71 @@ fun CalendarView(
         
         Spacer(modifier = Modifier.height(8.dp))
         
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(7),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(260.dp),
-            userScrollEnabled = false
-        ) {
-            val firstDayOfWeek = currentMonth.atDay(1).dayOfWeek.value - 1 // 0 for Mon, 6 for Sun
-            val daysInMonth = currentMonth.lengthOfMonth()
-            
-            items(firstDayOfWeek) {
-                Box(modifier = Modifier.aspectRatio(1f)) // Empty leading boxes
-            }
-            
-            items(daysInMonth) { day ->
-                val date = currentMonth.atDay(day + 1)
-                val record = recordsByDate[date]
-                
-                val bgColor = when (record?.status) {
-                    AttendanceStatus.PRESENT -> Color(0xFF4CAF50).copy(alpha = 0.2f)
-                    AttendanceStatus.ABSENT -> Color(0xFFF44336).copy(alpha = 0.2f)
-                    AttendanceStatus.MASS_BUNK -> Color(0xFFFF9800).copy(alpha = 0.2f)
-                    AttendanceStatus.CANCELLED -> Color(0xFF9E9E9E).copy(alpha = 0.2f)
-                    AttendanceStatus.HOLIDAY -> Color(0xFF2196F3).copy(alpha = 0.2f)
-                    else -> Color.Transparent
+        AnimatedContent(
+            targetState = currentMonth,
+            transitionSpec = {
+                if (targetState.isAfter(initialState)) {
+                    slideInHorizontally(animationSpec = tween(300), initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(animationSpec = tween(300)) togetherWith
+                    slideOutHorizontally(animationSpec = tween(300), targetOffsetX = { fullWidth -> -fullWidth }) + fadeOut(animationSpec = tween(300))
+                } else {
+                    slideInHorizontally(animationSpec = tween(300), initialOffsetX = { fullWidth -> -fullWidth }) + fadeIn(animationSpec = tween(300)) togetherWith
+                    slideOutHorizontally(animationSpec = tween(300), targetOffsetX = { fullWidth -> fullWidth }) + fadeOut(animationSpec = tween(300))
                 }
+            },
+            label = "calendar_month_animation"
+        ) { targetMonth ->
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(7),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(260.dp),
+                userScrollEnabled = false
+            ) {
+                val firstDayOfWeek = targetMonth.atDay(1).dayOfWeek.value - 1 // 0 for Mon, 6 for Sun
+                val daysInMonth = targetMonth.lengthOfMonth()
+                
+                items(firstDayOfWeek) {
+                    Box(modifier = Modifier.aspectRatio(1f)) // Empty leading boxes
+                }
+                
+                items(daysInMonth) { day ->
+                    val date = targetMonth.atDay(day + 1)
+                    val record = recordsByDate[date]
+                    
+                    val bgColor = when (record?.status) {
+                        AttendanceStatus.PRESENT -> Color(0xFF4CAF50).copy(alpha = 0.2f)
+                        AttendanceStatus.ABSENT -> Color(0xFFF44336).copy(alpha = 0.2f)
+                        AttendanceStatus.MASS_BUNK -> Color(0xFFFF9800).copy(alpha = 0.2f)
+                        AttendanceStatus.CANCELLED -> Color(0xFF9E9E9E).copy(alpha = 0.2f)
+                        AttendanceStatus.HOLIDAY -> Color(0xFF2196F3).copy(alpha = 0.2f)
+                        else -> Color.Transparent
+                    }
 
-                val textColor = when (record?.status) {
-                    AttendanceStatus.PRESENT -> Color(0xFF2E7D32)
-                    AttendanceStatus.ABSENT -> Color(0xFFC62828)
-                    AttendanceStatus.MASS_BUNK -> Color(0xFFEF6C00)
-                    AttendanceStatus.CANCELLED -> Color(0xFF424242)
-                    AttendanceStatus.HOLIDAY -> Color(0xFF1565C0)
-                    else -> MaterialTheme.colorScheme.onSurface
-                }
-                
-                Box(
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .padding(4.dp)
-                        .clip(CircleShape)
-                        .background(bgColor)
-                        .clickable { onDateClick(date, record) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = (day + 1).toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = if (record != null) FontWeight.Bold else FontWeight.Normal,
-                        color = textColor
-                    )
+                    val textColor = when (record?.status) {
+                        AttendanceStatus.PRESENT -> Color(0xFF2E7D32)
+                        AttendanceStatus.ABSENT -> Color(0xFFC62828)
+                        AttendanceStatus.MASS_BUNK -> Color(0xFFEF6C00)
+                        AttendanceStatus.CANCELLED -> Color(0xFF424242)
+                        AttendanceStatus.HOLIDAY -> Color(0xFF1565C0)
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+                    
+                    Box(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .padding(4.dp)
+                            .clip(CircleShape)
+                            .background(bgColor)
+                            .clickable { onDateClick(date, record) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = (day + 1).toString(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (record != null) FontWeight.Bold else FontWeight.Normal,
+                            color = textColor
+                        )
+                    }
                 }
             }
         }

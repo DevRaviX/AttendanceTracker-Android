@@ -1,5 +1,6 @@
 package com.devravix.attendancetracker.ui.screens
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -48,6 +49,7 @@ fun AllSubjectsScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .animateContentSize()
                         .clickable { onNavigateToSubject(stats.subjectId) },
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -71,7 +73,16 @@ fun AllSubjectsScreen(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
+                        
+                        LinearProgressIndicator(
+                            progress = { if (stats.totalConducted > 0) percentage / 100f else 0f },
+                            modifier = Modifier.fillMaxWidth().height(8.dp),
+                            color = if (percentage >= 75f) Color(0xFF388E3C) else Color(0xFFD32F2F),
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
 
                         Text(
                             text = "Attendance: ${stats.presentCount} / ${stats.totalConducted} (Present/Conducted)",
