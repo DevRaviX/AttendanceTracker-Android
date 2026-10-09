@@ -1,4 +1,4 @@
-package com.example.firstapplications.ui.screens
+package com.devravix.attendancetracker.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.firstapplications.data.StudentGroup
-import com.example.firstapplications.ui.OnboardingViewModel
+import com.devravix.attendancetracker.data.StudentGroup
+import com.devravix.attendancetracker.ui.OnboardingViewModel
 
 @Composable
 fun OnboardingScreen(viewModel: OnboardingViewModel, onComplete: () -> Unit) {

@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.firstapplications"
+    namespace = "com.devravix.attendancetracker"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.firstapplications"
+        applicationId = "com.devravix.attendancetracker"
         minSdk = 24
         targetSdk = 37
         versionCode = 1

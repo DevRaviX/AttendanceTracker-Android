@@ -1,4 +1,4 @@
-package com.example.firstapplications
+package com.devravix.attendancetracker
 
 import org.junit.Test
 

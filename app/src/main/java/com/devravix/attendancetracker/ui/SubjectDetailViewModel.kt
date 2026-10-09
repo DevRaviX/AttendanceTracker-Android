@@ -1,12 +1,12 @@
-package com.example.firstapplications.ui
+package com.devravix.attendancetracker.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firstapplications.data.AttendanceRecordEntity
-import com.example.firstapplications.data.SubjectEntity
-import com.example.firstapplications.data.TrackerDao
-import com.example.firstapplications.data.AttendanceStatus
-import com.example.firstapplications.data.TimetableEntity
+import com.devravix.attendancetracker.data.AttendanceRecordEntity
+import com.devravix.attendancetracker.data.SubjectEntity
+import com.devravix.attendancetracker.data.TrackerDao
+import com.devravix.attendancetracker.data.AttendanceStatus
+import com.devravix.attendancetracker.data.TimetableEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

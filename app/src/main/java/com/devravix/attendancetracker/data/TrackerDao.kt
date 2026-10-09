@@ -1,4 +1,4 @@
-package com.example.firstapplications.data
+package com.devravix.attendancetracker.data
 
 import androidx.room.Dao
 import androidx.room.Insert

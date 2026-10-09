@@ -1,4 +1,4 @@
-package com.example.firstapplications.ui.screens
+package com.devravix.attendancetracker.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.firstapplications.data.AttendanceStatus
-import com.example.firstapplications.ui.SubjectDetailViewModel
+import com.devravix.attendancetracker.data.AttendanceStatus
+import com.devravix.attendancetracker.ui.SubjectDetailViewModel
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -39,7 +39,7 @@ fun SubjectDetailScreen(
 
     val recordsByDate = records.associateBy { it.date }
     
-    var recordToEdit by remember { mutableStateOf<com.example.firstapplications.data.AttendanceRecordEntity?>(null) }
+    var recordToEdit by remember { mutableStateOf<com.devravix.attendancetracker.data.AttendanceRecordEntity?>(null) }
     var showAddPastDialog by remember { mutableStateOf(false) }
     var preselectedDateForAdd by remember { mutableStateOf<LocalDate?>(null) }
 
@@ -182,7 +182,7 @@ fun SubjectDetailScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPastRecordDialog(
-    timetables: List<com.example.firstapplications.data.TimetableEntity>,
+    timetables: List<com.devravix.attendancetracker.data.TimetableEntity>,
     initialDate: LocalDate,
     onDismiss: () -> Unit,
     onAdd: (Int, LocalDate, AttendanceStatus) -> Unit
@@ -287,7 +287,7 @@ fun AddPastRecordDialog(
 
 @Composable
 fun EditRecordDialog(
-    record: com.example.firstapplications.data.AttendanceRecordEntity,
+    record: com.devravix.attendancetracker.data.AttendanceRecordEntity,
     onDismiss: () -> Unit,
     onUpdate: (AttendanceStatus) -> Unit,
     onDelete: () -> Unit
@@ -330,8 +330,8 @@ fun EditRecordDialog(
 
 @Composable
 fun CalendarView(
-    recordsByDate: Map<LocalDate, com.example.firstapplications.data.AttendanceRecordEntity>,
-    onDateClick: (LocalDate, com.example.firstapplications.data.AttendanceRecordEntity?) -> Unit
+    recordsByDate: Map<LocalDate, com.devravix.attendancetracker.data.AttendanceRecordEntity>,
+    onDateClick: (LocalDate, com.devravix.attendancetracker.data.AttendanceRecordEntity?) -> Unit
 ) {
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
     

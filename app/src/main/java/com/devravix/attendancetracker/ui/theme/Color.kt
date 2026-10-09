@@ -1,4 +1,4 @@
-package com.example.firstapplications.ui.theme
+package com.devravix.attendancetracker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

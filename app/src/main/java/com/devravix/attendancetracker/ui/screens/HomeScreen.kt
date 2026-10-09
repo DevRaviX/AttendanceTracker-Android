@@ -1,4 +1,4 @@
-package com.example.firstapplications.ui.screens
+package com.devravix.attendancetracker.ui.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -28,10 +28,10 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.firstapplications.data.AttendanceStatus
-import com.example.firstapplications.data.TodayClass
-import com.example.firstapplications.ui.HomeUiState
-import com.example.firstapplications.ui.HomeViewModel
+import com.devravix.attendancetracker.data.AttendanceStatus
+import com.devravix.attendancetracker.data.TodayClass
+import com.devravix.attendancetracker.ui.HomeUiState
+import com.devravix.attendancetracker.ui.HomeViewModel
 import java.time.format.TextStyle
 import java.util.Locale
 

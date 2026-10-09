@@ -1,4 +1,4 @@
-package com.example.firstapplications.ui.screens
+package com.devravix.attendancetracker.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.firstapplications.ui.HomeViewModel
+import com.devravix.attendancetracker.ui.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

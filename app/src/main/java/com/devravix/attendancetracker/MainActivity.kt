@@ -1,4 +1,4 @@
-package com.example.firstapplications
+package com.devravix.attendancetracker
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,18 +22,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.firstapplications.data.AppDatabase
-import com.example.firstapplications.data.DatabaseSeeder
-import com.example.firstapplications.data.UserPreferencesRepository
-import com.example.firstapplications.data.dataStore
-import com.example.firstapplications.ui.HomeViewModel
-import com.example.firstapplications.ui.OnboardingViewModel
-import com.example.firstapplications.ui.SubjectDetailViewModel
-import com.example.firstapplications.ui.screens.AllSubjectsScreen
-import com.example.firstapplications.ui.screens.HomeScreen
-import com.example.firstapplications.ui.screens.OnboardingScreen
-import com.example.firstapplications.ui.screens.SubjectDetailScreen
-import com.example.firstapplications.ui.theme.FirstApplicationsTheme
+import com.devravix.attendancetracker.data.AppDatabase
+import com.devravix.attendancetracker.data.DatabaseSeeder
+import com.devravix.attendancetracker.data.UserPreferencesRepository
+import com.devravix.attendancetracker.data.dataStore
+import com.devravix.attendancetracker.ui.HomeViewModel
+import com.devravix.attendancetracker.ui.OnboardingViewModel
+import com.devravix.attendancetracker.ui.SubjectDetailViewModel
+import com.devravix.attendancetracker.ui.screens.AllSubjectsScreen
+import com.devravix.attendancetracker.ui.screens.HomeScreen
+import com.devravix.attendancetracker.ui.screens.OnboardingScreen
+import com.devravix.attendancetracker.ui.screens.SubjectDetailScreen
+import com.devravix.attendancetracker.ui.theme.FirstApplicationsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +77,7 @@ fun AttendanceTrackerApp(
     startDestination: String,
     userPrefs: UserPreferencesRepository,
     seeder: DatabaseSeeder,
-    dao: com.example.firstapplications.data.TrackerDao
+    dao: com.devravix.attendancetracker.data.TrackerDao
 ) {
     val navController = rememberNavController()
 

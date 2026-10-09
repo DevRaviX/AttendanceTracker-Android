@@ -1,10 +1,10 @@
-package com.example.firstapplications.ui
+package com.devravix.attendancetracker.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firstapplications.data.DatabaseSeeder
-import com.example.firstapplications.data.StudentGroup
-import com.example.firstapplications.data.UserPreferencesRepository
+import com.devravix.attendancetracker.data.DatabaseSeeder
+import com.devravix.attendancetracker.data.StudentGroup
+import com.devravix.attendancetracker.data.UserPreferencesRepository
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(

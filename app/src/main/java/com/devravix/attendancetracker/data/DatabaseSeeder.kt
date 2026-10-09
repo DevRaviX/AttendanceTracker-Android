@@ -1,4 +1,4 @@
-package com.example.firstapplications.data
+package com.devravix.attendancetracker.data
 
 class DatabaseSeeder(private val dao: TrackerDao) {
 
